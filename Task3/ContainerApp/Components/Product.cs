@@ -44,4 +44,12 @@ public class Product
                 return 10;
         }
     }
+    public static Food GetFood(int num){ return (Food)num; }
+    public static void PrintAllProducts()
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            Console.WriteLine(i + ". " + GetFood(i).ToString());
+        }
+    }
 }

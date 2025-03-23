@@ -16,6 +16,7 @@ public abstract class Container
     }
 
     protected abstract void SetSerialNumber();
+    public abstract string GetInformation();
 
     public virtual void LoadCargo(double massOfCargo)
     {
@@ -26,6 +27,11 @@ public abstract class Container
     public virtual void Empty()
     {
         this._massOfCargo = 0;
+    }
+
+    public double GetTotalWeightOfCargo()
+    {
+        return this._massOfCargo + this._tareWeight;
     }
     
     public override string ToString()
@@ -49,6 +55,15 @@ public class LiquidContainer : Container, IHazardNotifier
         SetSerialNumber();
     }
 
+    public override string GetInformation()
+    {
+        return "Container: " + this.SerialNumber + "\nCategory: " + this._category.ToString() +
+               "\nCurrent Cargo Mass: " + this._maximumPayload +
+               "\nMaximum Payload: " + this._maximumPayload +
+               "\nContainer Height: " + this._containerHeight +
+               "\nContainer Depth: " + this._containerDepth;
+    }
+
     public override void LoadCargo(double massOfCargo)
     {
         if (massOfCargo > this._maximumPayload / 2 && this._category == Category.Hazardous) throw new OverfillException(Notify("Hazard Notification: Attempted Overload of Hazardous Liquid Container!"));
@@ -70,10 +85,21 @@ public class LiquidContainer : Container, IHazardNotifier
 
 public class GasContainer : Container, IHazardNotifier
 {
+    private double _pressurePascal;
     public GasContainer(double containerHeight, double containerDepth, double tareWeight,
-        double maximumPayload) : base(containerHeight, containerDepth, tareWeight, maximumPayload)
+        double maximumPayload, double pressure) : base(containerHeight, containerDepth, tareWeight, maximumPayload)
     {
+        this._pressurePascal = pressure;
         SetSerialNumber();
+    }
+    
+    public override string GetInformation()
+    {
+        return "Container: " + this.SerialNumber + "\nCategory: " + this._pressurePascal +
+               "\nCurrent Cargo Mass: " + this._maximumPayload +
+               "\nMaximum Payload: " + this._maximumPayload +
+               "\nContainer Height: " + this._containerHeight +
+               "\nContainer Depth: " + this._containerDepth;
     }
 
     public override void LoadCargo(double massOfCargo)
@@ -111,6 +137,17 @@ public class RefrigeratedContainer : Container
         SetSerialNumber();
     }
     
+    public override string GetInformation()
+    {
+        return "Container: " + this.SerialNumber + "\nCategory: " + _food.ToString() +
+               "\nSet Temperature: " + _setTemperature +
+               "\nRequired Temperature: " + _requiredTemperature +
+               "\nCurrent Cargo Mass: " + this._maximumPayload +
+               "\nMaximum Payload: " + this._maximumPayload +
+               "\nContainer Height: " + this._containerHeight +
+               "\nContainer Depth: " + this._containerDepth;
+    }
+    
     public string Notify(string message)
     {
         return message + "\nContainer Serial Number: " + this.SerialNumber;
@@ -118,12 +155,35 @@ public class RefrigeratedContainer : Container
 
     public override void LoadCargo(double massOfCargo)
     {
-        
+        if (massOfCargo > this._maximumPayload)
+            throw new OverfillException(Notify("Hazard Notification: Attempted Overload of Refrigerated Container!"));
+        if (Category() == this._food)
+        {
+            this._setTemperature = Temperature();
+            this._massOfCargo = massOfCargo;
+        }
+        else throw new Exception(Notify("Hazard Notification: Only " + this._food.ToString() + " are allowed."));
     }
 
-    private void CargoInformation()
+    private Product.Food Category()
     {
-        
+        Console.WriteLine("Provide Category of Product: ");
+        Product.PrintAllProducts();
+        return Product.GetFood(Convert.ToInt32(Console.ReadLine()));
+    }
+
+    private double Temperature()
+    {
+        Console.WriteLine("Enter Temperature: ");
+        double temp = double.Parse(Console.ReadLine());
+        if (temp >= this._requiredTemperature) return temp;
+        else
+        {
+            Console.WriteLine("Temperature Too Low!\nSet it to Required (" + this._requiredTemperature + ")? Y/N");
+            string input = Console.ReadLine();
+            if (input.Equals("Y", StringComparison.OrdinalIgnoreCase)) return _requiredTemperature;
+            else throw new Exception(Notify("Hazardous Notification: Attempt of Setting Temperature Too Low!"));
+        }
     }
 
     protected override void SetSerialNumber()
