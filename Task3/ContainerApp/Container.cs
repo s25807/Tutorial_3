@@ -19,6 +19,9 @@ public abstract class Container
 
     public virtual void LoadCargo(double massOfCargo)
     {
+        if (massOfCargo > _maximumPayload)
+            throw new OverfillException("Overfill:\nMaximum Payload: " + _maximumPayload +
+                                        " kg\nAttempted Cargo Load: " + massOfCargo + " kg");
         this._massOfCargo = massOfCargo;
     }
     
@@ -44,8 +47,8 @@ public class LiquidContainer : Container, IHazardNotifier
 
     public override void LoadCargo(double massOfCargo)
     {
-        if (massOfCargo >= this._maximumPayload / 2 && this._category == Category.Hazardous) Console.WriteLine(Notify("Attempted Overload of Hazardous Container!"));
-        else if(massOfCargo >= this._maximumPayload * 0.9 && this._category == Category.Ordinary) Console.WriteLine(Notify("Attempted Overload of Ordinary Container!"));
+        if (massOfCargo >= this._maximumPayload / 2 && this._category == Category.Hazardous) throw new OverfillException(Notify("Attempted Overload of Hazardous Liquid Container!"));
+        else if(massOfCargo >= this._maximumPayload * 0.9 && this._category == Category.Ordinary) throw new OverfillException(Notify("Attempted Overload of Ordinary Liquid Container!"));
         else this._massOfCargo = massOfCargo;
     }
     
@@ -57,6 +60,26 @@ public class LiquidContainer : Container, IHazardNotifier
     protected override void SetSerialNumber()
     {
         this.SerialNumber = "Kon-L-" + NumberOfContainers;
+        ++NumberOfContainers;
+    }
+}
+
+public class GasContainer : Container, IHazardNotifier
+{
+    public GasContainer(double _massOfCargo, double containerHeight, double containerDepth, double tareWeight,
+        double maximumPayload) : base(0, containerHeight, containerDepth, tareWeight, maximumPayload)
+    {
+        
+    }
+
+    public string Notify(string message)
+    {
+        return message + "\nContainer Serial Number: " + this.SerialNumber;
+    }
+
+    protected override void SetSerialNumber()
+    {
+        this.SerialNumber = "Kon-G-" + NumberOfContainers;
         ++NumberOfContainers;
     }
 }
