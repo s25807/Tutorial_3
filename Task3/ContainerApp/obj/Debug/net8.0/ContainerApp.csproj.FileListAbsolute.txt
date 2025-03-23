@@ -1,0 +1,15 @@
+Z:\APBD\Tutorial_3\Task3\ContainerApp\bin\Debug\net8.0\ContainerApp.exe
+Z:\APBD\Tutorial_3\Task3\ContainerApp\bin\Debug\net8.0\ContainerApp.deps.json
+Z:\APBD\Tutorial_3\Task3\ContainerApp\bin\Debug\net8.0\ContainerApp.runtimeconfig.json
+Z:\APBD\Tutorial_3\Task3\ContainerApp\bin\Debug\net8.0\ContainerApp.dll
+Z:\APBD\Tutorial_3\Task3\ContainerApp\bin\Debug\net8.0\ContainerApp.pdb
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.GeneratedMSBuildEditorConfig.editorconfig
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.AssemblyInfoInputs.cache
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.AssemblyInfo.cs
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.csproj.CoreCompileInputs.cache
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.sourcelink.json
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.dll
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\refint\ContainerApp.dll
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.pdb
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ContainerApp.genruntimeconfig.cache
+Z:\APBD\Tutorial_3\Task3\ContainerApp\obj\Debug\net8.0\ref\ContainerApp.dll
